@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kindness Collective '95 - Donation Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .file-drop-zone {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .file-drop-zone:hover {
+            border-color: #6366f1;
+            background-color: #f8fafc;
+        }
+        .file-drop-zone.dragover {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .success-animation {
+            animation: slideInUp 0.5s ease-out;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2">
+                    <i class="fas fa-heart text-pink-200 mr-3"></i>
+                    Kindness Collective '95
+                </h1>
+                <p class="text-lg opacity-90">Donation Confirmation Portal</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Welcome Message -->
+        <div class="bg-white rounded-lg card-shadow p-6 mb-8">
+            <div class="text-center">
+                <i class="fas fa-hands-helping text-5xl text-indigo-600 mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Thank you for your generous donation!</h2>
+                <p class="text-gray-600 leading-relaxed">
+                    Please use this form to confirm your donation to Kindness Collective '95. 
+                    Upload your payment receipt or screenshot, and our executive team will be automatically notified.
+                </p>
+            </div>
+        </div>
+
+        <!-- Donation Confirmation Form -->
+        <div class="bg-white rounded-lg card-shadow p-8 mb-8">
+            <form id="donationForm" class="space-y-6">
+                <!-- Personal Information -->
+                <div class="border-b pb-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i class="fas fa-user text-indigo-600 mr-2"></i>
+                        Your Information
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="donorName" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <input type="text" id="donorName" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="donorEmail" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                            <input type="email" id="donorEmail" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="donorPhone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="donorPhone" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donation Details -->
+                <div class="border-b pb-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i class="fas fa-dollar-sign text-green-600 mr-2"></i>
+                        Donation Details
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="donationAmount" class="block text-sm font-medium text-gray-700 mb-2">Donation Amount ($) *</label>
+                            <input type="number" id="donationAmount" min="0.01" step="0.01" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="donationDate" class="block text-sm font-medium text-gray-700 mb-2">Donation Date *</label>
+                            <input type="date" id="donationDate" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="paymentMethod" class="block text-sm font-medium text-gray-700 mb-2">Payment Method *</label>
+                            <select id="paymentMethod" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                                <option value="">Select Method</option>
+                                <option value="bank-transfer">Bank Transfer</option>
+                                <option value="online-banking">Online Banking</option>
+                                <option value="mobile-banking">Mobile Banking</option>
+                                <option value="gcash">GCash</option>
+                                <option value="paymaya">PayMaya</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="border-b pb-6 mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i class="fas fa-receipt text-blue-600 mr-2"></i>
+                        Upload Receipt/Screenshot *
+                    </h3>
+                    <div id="fileDropZone" class="file-drop-zone rounded-lg p-8 text-center cursor-pointer">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-lg font-medium text-gray-700 mb-2">Drop your file here or click to browse</p>
+                        <p class="text-sm text-gray-500">Supports JPG, PNG, PDF (Max 5MB)</p>
+                        <input type="file" id="receiptFile" accept="image/*,.pdf" hidden required>
+                    </div>
+                    <div id="filePreview" class="mt-4 hidden">
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt text-2xl text-blue-600 mr-3"></i>
+                                <div>
+                                    <p id="fileName" class="font-medium text-gray-800"></p>
+                                    <p id="fileSize" class="text-sm text-gray-500"></p>
+                                </div>
+                            </div>
+                            <button type="button" id="removeFile" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-times text-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optional Message -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                        <i class="fas fa-comment text-purple-600 mr-2"></i>
+                        Message (Optional)
+                    </h3>
+                    <textarea id="donorMessage" rows="4" 
+                              placeholder="Share why you're supporting Kindness Collective '95..."
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors resize-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" id="submitBtn" 
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Confirm Donation
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden bg-green-50 border border-green-200 rounded-lg p-6 mb-8 success-animation">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-5xl text-green-600 mb-4"></i>
+                <h3 class="text-2xl font-bold text-green-800 mb-3">Donation Confirmed Successfully!</h3>
+                <p class="text-green-700 mb-4">
+                    Thank you for your generous donation to Kindness Collective '95. 
+                    Our executive team has been notified and will process your donation confirmation.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button id="downloadCsvBtn" 
+                            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Record (CSV)
+                    </button>
+                    <button id="submitAnotherBtn" 
+                            class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        Submit Another
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Panel -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-blue-800 mb-4">
+                <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                What Happens Next?
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-blue-700">
+                <div class="text-center">
+                    <i class="fas fa-envelope text-3xl text-blue-600 mb-3"></i>
+                    <h4 class="font-semibold mb-2">Automatic Notification</h4>
+                    <p class="text-sm">Our executive team receives instant email notification of your donation</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-table text-3xl text-blue-600 mb-3"></i>
+                    <h4 class="font-semibold mb-2">Record Keeping</h4>
+                    <p class="text-sm">Your donation details are recorded in our secure tracking system</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-handshake text-3xl text-blue-600 mb-3"></i>
+                    <h4 class="font-semibold mb-2">Acknowledgment</h4>
+                    <p class="text-sm">You'll receive official acknowledgment and thanks from our team</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-2">Kindness Collective '95</h3>
+            <p class="text-gray-300 mb-4">Making a difference, one donation at a time</p>
+            <div class="flex justify-center space-x-6 text-gray-400">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-hands-helping"></i>
+                <i class="fas fa-globe"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Executive team emails
+        const EXECUTIVE_EMAILS = [
+            'earl782002@yahoo.com',
+            'rowelaparicio@yahoo.com.ph', 
+            'jonjoshtiongson@gmail.com'
+        ];
+
+        let uploadedFile = null;
+        let donationData = null;
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
+            document.getElementById('donationDate').valueAsDate = new Date();
+            
+            initializeFileUpload();
+            initializeForm();
+        });
+
+        // File upload functionality
+        function initializeFileUpload() {
+            const dropZone = document.getElementById('fileDropZone');
+            const fileInput = document.getElementById('receiptFile');
+            const filePreview = document.getElementById('filePreview');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const removeFile = document.getElementById('removeFile');
+
+            // Click to open file dialog
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            // Drag and drop events
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+
+            // File input change
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            // Remove file
+            removeFile.addEventListener('click', () => {
+                uploadedFile = null;
+                fileInput.value = '';
+                filePreview.classList.add('hidden');
+                dropZone.style.display = 'block';
+            });
+
+            function handleFile(file) {
+                // Validate file
+                if (!validateFile(file)) return;
+
+                uploadedFile = file;
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                filePreview.classList.remove('hidden');
+                dropZone.style.display = 'none';
+            }
+
+            function validateFile(file) {
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Please upload only JPG, PNG, or PDF files.');
+                    return false;
+                }
+
+                if (file.size > maxSize) {
+                    alert('File size must be less than 5MB.');
+                    return false;
+                }
+
+                return true;
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+        }
+
+        // Form handling
+        function initializeForm() {
+            const form = document.getElementById('donationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+            const submitAnotherBtn = document.getElementById('submitAnotherBtn');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (!uploadedFile) {
+                    alert('Please upload your donation receipt or screenshot.');
+                    return;
+                }
+
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+                submitBtn.disabled = true;
+
+                // Collect form data
+                donationData = {
+                    timestamp: new Date().toISOString(),
+                    donorName: document.getElementById('donorName').value,
+                    donorEmail: document.getElementById('donorEmail').value,
+                    donorPhone: document.getElementById('donorPhone').value,
+                    donationAmount: document.getElementById('donationAmount').value,
+                    donationDate: document.getElementById('donationDate').value,
+                    paymentMethod: document.getElementById('paymentMethod').value,
+                    fileName: uploadedFile.name,
+                    fileSize: formatFileSize(uploadedFile.size),
+                    donorMessage: document.getElementById('donorMessage').value
+                };
+
+                // Simulate processing delay
+                setTimeout(() => {
+                    sendEmailNotifications();
+                    showSuccessMessage();
+                    
+                    // Reset button
+                    submitBtn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Confirm Donation';
+                    submitBtn.disabled = false;
+                }, 1500);
+            });
+
+            downloadCsvBtn.addEventListener('click', downloadCSV);
+            submitAnotherBtn.addEventListener('click', resetForm);
+        }
+
+        function sendEmailNotifications() {
+            const subject = encodeURIComponent('New Donation Confirmation - Kindness Collective \'95');
+            const body = encodeURIComponent(`Hello Executive Team,
+
+A new donation has been confirmed through the Kindness Collective '95 portal:
+
+DONOR INFORMATION:
+• Name: ${donationData.donorName}
+• Email: ${donationData.donorEmail}
+• Phone: ${donationData.donorPhone || 'Not provided'}
+
+DONATION DETAILS:
+• Amount: $${donationData.donationAmount}
+• Date: ${donationData.donationDate}
+• Payment Method: ${donationData.paymentMethod}
+• Submission Time: ${new Date(donationData.timestamp).toLocaleString()}
+
+FILE INFORMATION:
+• File Name: ${donationData.fileName}
+• File Size: ${donationData.fileSize}
+
+${donationData.donorMessage ? `MESSAGE FROM DONOR:\n${donationData.donorMessage}\n\n` : ''}
+
+Please review and process this donation confirmation accordingly.
+
+Best regards,
+Kindness Collective '95 Donation System`);
+
+            const mailtoLink = `mailto:${EXECUTIVE_EMAILS.join(',')}?subject=${subject}&body=${body}`;
+            
+            // Open email client
+            window.open(mailtoLink);
+        }
+
+        function showSuccessMessage() {
+            document.getElementById('donationForm').style.display = 'none';
+            document.getElementById('successMessage').classList.remove('hidden');
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function downloadCSV() {
+            const csvData = [
+                ['Timestamp', 'Donor Name', 'Email', 'Phone', 'Donation Amount', 'Donation Date', 'Payment Method', 'File Name', 'File Size', 'Message'],
+                [
+                    new Date(donationData.timestamp).toLocaleString(),
+                    donationData.donorName,
+                    donationData.donorEmail,
+                    donationData.donorPhone || '',
+                    donationData.donationAmount,
+                    donationData.donationDate,
+                    donationData.paymentMethod,
+                    donationData.fileName,
+                    donationData.fileSize,
+                    donationData.donorMessage || ''
+                ]
+            ];
+
+            const csvContent = csvData.map(row => 
+                row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')
+            ).join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `donation_${donationData.donorName.replace(/\s+/g, '_')}_${Date.now()}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function resetForm() {
+            // Reset form
+            document.getElementById('donationForm').reset();
+            document.getElementById('donationDate').valueAsDate = new Date();
+            
+            // Reset file upload
+            uploadedFile = null;
+            document.getElementById('filePreview').classList.add('hidden');
+            document.getElementById('fileDropZone').style.display = 'block';
+            
+            // Show form, hide success message
+            document.getElementById('donationForm').style.display = 'block';
+            document.getElementById('successMessage').classList.add('hidden');
+            
+            // Scroll to top of form
+            document.querySelector('header').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
